@@ -1,2 +1,1 @@
 # Chess
-SYSC3010 T2
