@@ -8,5 +8,4 @@
 <img src="https://github.com/Rickydam/RPi-Chess/blob/master/boardcoords.jpg" width="50%" height="50%" />
 
 # Array Piece Values
-# Coords & Prototype
 <img src="https://github.com/Rickydam/RPi-Chess/blob/master/piecearrayvalue.PNG" width="30%" height="30%" />
