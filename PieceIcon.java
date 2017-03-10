@@ -22,7 +22,7 @@ public class PieceIcon extends JButton {
     public static final int BLACK_BISHOP = 10;
     public static final int BLACK_QUEEN = 11;
     public static final int BLACK_KING = 12;
-    
+
     public static final int RED_BASE = 20;
     public static final int BEIGE_BASE = 21;
 
@@ -39,11 +39,12 @@ public class PieceIcon extends JButton {
 
         try {
             // Load background base color
-            if (piece_value == PieceIcon.RED_BASE){
+            if (base_value == PieceIcon.RED_BASE){
                 base_color = ImageIO.read(new FileInputStream(new File("pieces/red.jpg")));
-
-            }else if (piece_value == PieceIcon.BEIGE_BASE){
+                System.out.println("RED");
+            }else if (base_value == PieceIcon.BEIGE_BASE){
                 base_color = ImageIO.read(new File("pieces/white.jpg"));
+                System.out.println("WHITE");
             }
 
         }catch (Exception e){
