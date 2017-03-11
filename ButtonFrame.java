@@ -2,7 +2,7 @@ import java.awt.*;
 import javax.swing.*;
 
 public class ButtonFrame extends JFrame {
-    private JButton bChange;
+    private PieceIcon bChange;
     private ButtonFrame frm;
 
     ButtonFrame(String title)
@@ -12,6 +12,7 @@ public class ButtonFrame extends JFrame {
         setLayout(new FlowLayout());
 
         bChange = new PieceIcon(PieceIcon.RED_BASE);
+        bChange.setPiece(PieceIcon.BLACK_PAWN);
         add(bChange);
     }
 }

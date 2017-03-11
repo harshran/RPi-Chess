@@ -43,7 +43,7 @@ public class PieceIcon extends JButton {
                 base_color = ImageIO.read(new FileInputStream(new File("pieces/red.jpg")));
                 System.out.println("RED");
             }else if (base_value == PieceIcon.BEIGE_BASE){
-                base_color = ImageIO.read(new File("pieces/white.jpg"));
+                base_color = ImageIO.read(new FileInputStream(new File("pieces/white.jpg")));
                 System.out.println("WHITE");
             }
 
@@ -99,7 +99,9 @@ public class PieceIcon extends JButton {
             BufferedImage combined = new BufferedImage(piece.getWidth(), piece.getHeight(), BufferedImage.TYPE_INT_ARGB);
             Graphics g = combined.getGraphics();
             g.drawImage(base_color, 0, 0, null);
-            g.drawImage(piece, 0, 0, null);
+            if (new_piece_value != PieceIcon.EMPTY){
+                g.drawImage(piece, 0, 0, null);
+            }
 
             // Set Icon
             ImageIcon icon = new ImageIcon(combined);
