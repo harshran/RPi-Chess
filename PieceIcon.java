@@ -32,19 +32,17 @@ public class PieceIcon extends JButton {
 
     public PieceIcon (int new_base_value){
         super();
-
+        this.setEnabled(false);
         // Get arguments
         base_value = new_base_value;
         piece_value = PieceIcon.EMPTY;
 
         try {
             // Load background base color
-            if (base_value == PieceIcon.RED_BASE){
+            if (base_value == PieceIcon.RED_BASE) {
                 base_color = ImageIO.read(new FileInputStream(new File("pieces/red.jpg")));
-                System.out.println("RED");
-            }else if (base_value == PieceIcon.BEIGE_BASE){
+            } else if(base_value == PieceIcon.BEIGE_BASE) {
                 base_color = ImageIO.read(new FileInputStream(new File("pieces/white.jpg")));
-                System.out.println("WHITE");
             }
 
         }catch (Exception e){
@@ -104,16 +102,25 @@ public class PieceIcon extends JButton {
             }
 
             // Set Icon
-            ImageIcon icon = new ImageIcon(combined);
+            ImageIcon icon = new ImageIcon(resize(combined, 100, 100));
             this.setIcon(icon);
+            this.setDisabledIcon(icon);
 
-
-        }catch (Exception e){
+        } catch(Exception e) {
             System.out.println(e);
         }
     }
 
-    public int getValue(){
+    public int getValue() {
         return piece_value;
+    }
+
+    public static BufferedImage resize(BufferedImage img, int newW, int newH) {
+        Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
+        BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = dimg.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+        return dimg;
     }
 }
