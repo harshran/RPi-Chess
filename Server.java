@@ -23,16 +23,20 @@ public class Server {
         }
 
         // Create the packet to send and send it.
-        byte[] ipByte = ip.getBytes();
         InetAddress address = null;
         try {
-            address = InetAddress.getByAddress(ipByte);
+            address = InetAddress.getByName(ip);
+            // address = InetAddress.getLocalHost();
         } catch(UnknownHostException uhe) {
             uhe.printStackTrace();
         }
         byte[] messageByte = message.getBytes();
         int sendLength = messageByte.length;
         DatagramPacket sendPacket = new DatagramPacket(messageByte, sendLength, address, port);
+        System.out.println("messageByte: " + messageByte);
+        System.out.println("sendLength: " + sendLength);
+        System.out.println("address: " + address);
+        System.out.println("port: " + port);
         try {
             sendreceiveSocket.send(sendPacket);
         } catch(IOException ioe) {
