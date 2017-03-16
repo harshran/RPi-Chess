@@ -22,10 +22,17 @@ public class GUI extends JFrame implements ActionListener {
 
   private Icon redblank;
   private Icon whiteblank;
-  /**
-   * Constructs the GUI.
-   */
-  public GUI() {
+
+  
+  public ArrayList<Integer> getBoard(){
+      return new ArrayList<Integer>();
+  }
+
+
+  public GUI(){
+  }
+
+  public void setup() {
     frame = new JFrame("SYSC3010 T2 - MeAndMyChess");
     frame.setPreferredSize(new Dimension(800, 800));
     Container contentPane = frame.getContentPane();

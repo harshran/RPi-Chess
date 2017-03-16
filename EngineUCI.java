@@ -7,6 +7,9 @@ public class EngineUCI {
     private OutputStreamWriter processWriter;
     private String pastMoves;
 
+    public EngineUCI(){
+    }
+
     // Constructor
     // Takes path to game engine as parameter
     public EngineUCI(String exePath) {
