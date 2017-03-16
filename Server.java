@@ -12,8 +12,7 @@ public class Server {
     }
 
     // Function to end a message by passing in an ip address as a byte array
-    public String sendMessage(String ip, int port, String message)
-    throws UnknownHostException, SocketException, IOException {
+    public String sendMessage(String ip, int port, String message) {
 
         // Create a sendreceive socket.
         try {
@@ -25,11 +24,20 @@ public class Server {
 
         // Create the packet to send and send it.
         byte[] ipByte = ip.getBytes();
-        InetAddress address = InetAddress.getByAddress(ipByte);
+        InetAddress address = null;
+        try {
+            address = InetAddress.getByAddress(ipByte);
+        } catch(UnknownHostException uhe) {
+            uhe.printStackTrace();
+        }
         byte[] messageByte = message.getBytes();
         int sendLength = messageByte.length;
         DatagramPacket sendPacket = new DatagramPacket(messageByte, sendLength, address, port);
-        sendreceiveSocket.send(sendPacket);
+        try {
+            sendreceiveSocket.send(sendPacket);
+        } catch(IOException ioe) {
+            ioe.printStackTrace();
+        }
         System.out.println("Packet has been sent to: " + ip);
 
         // Create the receive packet and wait until it is received.
