@@ -1,3 +1,4 @@
+#Harshan Anton - Positioning System Stepper Motor
 import socket, sys, time
 import RPi.GPIO as GPIO
 
