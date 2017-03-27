@@ -5,13 +5,6 @@ import javax.swing.*;
 import javax.swing.border.*;
 import javax.imageio.ImageIO;
 
-/**
-  * A class to create a GUI.
-  *
-  * @author Ricky Dam
-  * @version March 5, 2017
-  *
-  */
 public class GUI extends JFrame implements ActionListener {
   private JFrame frame;
   private JPanel mainPanel;
@@ -51,70 +44,6 @@ public class GUI extends JFrame implements ActionListener {
       for(int col=0; col<8; col++) {
         board[row][col] = new JButton();
         board[row][col].setEnabled(false);
-
-        /////////////////// isRook ///////////////////
-        if(counter==0 || counter==7 || counter==56 || counter==63) {
-
-        }
-        else {
-
-        }
-
-        /////////////////// isKnight ///////////////////
-        if(counter==1 || counter==6 || counter==57 || counter==62) {
-
-        }
-        else {
-
-        }
-
-        /////////////////// isBishop ///////////////////
-        if(counter==2 || counter==5 || counter==58 || counter==61) {
-
-        }
-        else {
-          ;
-        }
-
-        /////////////////// isQueen ///////////////////
-        if(counter==3 || counter==59) {
-
-        }
-        else {
-
-        }
-
-        /////////////////// isKing ///////////////////
-        if(counter==4 || counter==60) {
-
-        }
-        else {
-
-        }
-
-        /////////////////// isPawn ///////////////////
-        if((counter>8 && counter<16) || (counter>47 && counter<56)) {
-
-        }
-        else {
-
-        }
-
-        /////////////////// isBlack ///////////////////
-        if(counter<16) {
-
-        }
-        else {
-
-        }
-
-        /////////////////// isWhite ///////////////////
-        if(counter>47) {
-
-        }
-        else {
-
-        }
 
         if(row%2==0) { // Row 1, Row 3, Row 5, Row 7
           if(col%2==0) {
@@ -188,19 +117,7 @@ public class GUI extends JFrame implements ActionListener {
     Image newimg = img.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
     return new ImageIcon(newimg);
   }
-
-  /**
-   * Move a piece.
-   */
-  public void move(int oldrow, int oldcol, int newrow, int newcol) {
-  }
-  /*
-  public void movePiece(int oldrow, int oldcol, int newrow, int newcol, Icon piece) {
-    board[newrow][newcol].setIcon(piece);
-    board[newrow][newcol].setDisabledIcon(piece);
-    board[oldrow][oldcol].setIcon(blanksquare);
-    board[oldrow][oldcol].setDisabledIcon(blanksquare);
-  }
+ 
   */
   /**
    * Checks for action performed by the user.
