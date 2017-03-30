@@ -30,26 +30,26 @@ public class PieceIcon extends JButton {
     private int base_value;
     private Image base_color;
 
-    public PieceIcon (int new_base_value){
+    public PieceIcon(int new_base_value) {
         super();
         this.setEnabled(false);
-        // Get arguments
+
         base_value = new_base_value;
         piece_value = PieceIcon.EMPTY;
 
+        // Load background base color
         try {
-            // Load background base color
-            if (base_value == PieceIcon.RED_BASE) {
+            if(base_value == PieceIcon.RED_BASE) {
                 base_color = ImageIO.read(new FileInputStream(new File("pieces/red.jpg")));
             } else if(base_value == PieceIcon.BEIGE_BASE) {
                 base_color = ImageIO.read(new FileInputStream(new File("pieces/white.jpg")));
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
 
-        if (base_color == null){
+        if(base_color == null) {
             System.out.println("Exists");
         }
             // Set button icon to background color
@@ -59,37 +59,25 @@ public class PieceIcon extends JButton {
     }
 
     public void setPiece(int new_piece_value) {
+        piece_value = new_piece_value;
         BufferedImage piece;
 
         // Load piece image
-        try{
-            switch (new_piece_value) {
-                case EMPTY: piece = ImageIO.read(getClass().getResource("pieces_no_background/whitepawn.png"));
-                            break;
-                case WHITE_PAWN: piece = ImageIO.read(getClass().getResource("pieces_no_background/whitepawn.png"));
-                                 break;
-                case WHITE_ROOK: piece = ImageIO.read(getClass().getResource("pieces_no_background/whiterook.png"));
-                                 break;
-                case WHITE_KNIGHT: piece = ImageIO.read(getClass().getResource("pieces_no_background/whiteknight.png"));
-                                   break;
-                case WHITE_BISHOP: piece = ImageIO.read(getClass().getResource("pieces_no_background/whitebishop.png"));
-                                   break;
-                case WHITE_QUEEN: piece = ImageIO.read(getClass().getResource("pieces_no_background/whitequeen.png"));
-                                  break;
-                case WHITE_KING: piece = ImageIO.read(getClass().getResource("pieces_no_background/whiteking.png"));
-                                 break;
-                case BLACK_PAWN: piece = ImageIO.read(getClass().getResource("pieces_no_background/blackpawn.png"));
-                                 break;
-                case BLACK_ROOK: piece = ImageIO.read(getClass().getResource("pieces_no_background/blackrook.png"));
-                                 break;
-                case BLACK_KNIGHT: piece = ImageIO.read(getClass().getResource("pieces_no_background/blackknight.png"));
-                                   break;
-                case BLACK_BISHOP: piece = ImageIO.read(getClass().getResource("pieces_no_background/blackbishop.png"));
-                                   break;
-                case BLACK_QUEEN: piece = ImageIO.read(getClass().getResource("pieces_no_background/blackqueen.png"));
-                                  break;
-                case BLACK_KING: piece = ImageIO.read(getClass().getResource("pieces_no_background/blackking.png"));
-                                 break;
+        try {
+            switch(new_piece_value) {
+                case EMPTY: piece = ImageIO.read(getClass().getResource("pieces_no_background/whitepawn.png")); break;
+                case WHITE_PAWN: piece = ImageIO.read(getClass().getResource("pieces_no_background/whitepawn.png")); break;
+                case WHITE_ROOK: piece = ImageIO.read(getClass().getResource("pieces_no_background/whiterook.png")); break;
+                case WHITE_KNIGHT: piece = ImageIO.read(getClass().getResource("pieces_no_background/whiteknight.png")); break;
+                case WHITE_BISHOP: piece = ImageIO.read(getClass().getResource("pieces_no_background/whitebishop.png")); break;
+                case WHITE_QUEEN: piece = ImageIO.read(getClass().getResource("pieces_no_background/whitequeen.png")); break;
+                case WHITE_KING: piece = ImageIO.read(getClass().getResource("pieces_no_background/whiteking.png")); break;
+                case BLACK_PAWN: piece = ImageIO.read(getClass().getResource("pieces_no_background/blackpawn.png")); break;
+                case BLACK_ROOK: piece = ImageIO.read(getClass().getResource("pieces_no_background/blackrook.png")); break;
+                case BLACK_KNIGHT: piece = ImageIO.read(getClass().getResource("pieces_no_background/blackknight.png")); break;
+                case BLACK_BISHOP: piece = ImageIO.read(getClass().getResource("pieces_no_background/blackbishop.png")); break;
+                case BLACK_QUEEN: piece = ImageIO.read(getClass().getResource("pieces_no_background/blackqueen.png")); break;
+                case BLACK_KING: piece = ImageIO.read(getClass().getResource("pieces_no_background/blackking.png")); break;
                 default: piece = ImageIO.read(getClass().getResource("pieces_no_background/blackking.png"));
             }
 
@@ -97,7 +85,7 @@ public class PieceIcon extends JButton {
             BufferedImage combined = new BufferedImage(piece.getWidth(), piece.getHeight(), BufferedImage.TYPE_INT_ARGB);
             Graphics g = combined.getGraphics();
             g.drawImage(base_color, 0, 0, null);
-            if (new_piece_value != PieceIcon.EMPTY){
+            if(new_piece_value != PieceIcon.EMPTY) {
                 g.drawImage(piece, 0, 0, null);
             }
 
@@ -111,8 +99,12 @@ public class PieceIcon extends JButton {
         }
     }
 
-    public int getValue() {
+    public int getPieceValue() {
         return piece_value;
+    }
+
+    public int getBaseValue() {
+        return base_value;
     }
 
     public static BufferedImage resize(BufferedImage img, int newW, int newH) {
