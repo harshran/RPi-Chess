@@ -47,6 +47,7 @@ public class Server {
         System.out.println("address: " + address);
         System.out.println("port: " + port);
         System.out.println("Packet has been sent to: " + ip);
+        System.out.println();
 
         // Create the receive packet
         byte[] receivedMessage = new byte[100];
