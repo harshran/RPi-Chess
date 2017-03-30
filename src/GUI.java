@@ -1,13 +1,14 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.util.*;
 
-public class Test implements ActionListener {
+public class GUI implements ActionListener {
     private ButtonFrame theButtonFrame;
     private JMenuItem moveItem;
 
-    public Test() {
-        theButtonFrame = new ButtonFrame("Test");
+    public GUI() {
+        theButtonFrame = new ButtonFrame("SYSC3010 T2 - MeAndMyChess");
         theButtonFrame.setPreferredSize(new Dimension(800, 800));
 
         JMenuBar menuBar = new JMenuBar();
@@ -34,15 +35,19 @@ public class Test implements ActionListener {
         if(object instanceof JMenuItem) {
             JMenuItem menuitem = (JMenuItem) object;
             if(menuitem == moveItem) {
-                // move(1, 4, 2, 4);
+                theButtonFrame.movePiece(1, 16);
             }
         }
+    }
+
+    public ArrayList<Integer> getBoard() {
+        return new ArrayList<Integer>();
     }
 
     public static void main(String[] args) {
       javax.swing.SwingUtilities.invokeLater(new Runnable() {
         @Override public void run() {
-          new Test();
+          new GUI();
         }
       });
     }
