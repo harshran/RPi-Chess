@@ -6,7 +6,7 @@ GPIO_INA = 17
 GPIO_INB = 22
 GPIO_INC = 23
 GPIO_IND = 24
-GPIO_CLAW = 12
+GPIO_CLAW = 18
 
 #how many steps equal one square on chess board
 STEPS_PER_SQUARE = 1000
@@ -101,8 +101,7 @@ if __name__ == "__main__":
 		GPIO.setup(GPIO_CLAW, GPIO.OUT)
 
 		pwm = GPIO.PWM(GPIO_CLAW, 50)
-		pwm.start(9)
-		     
+		pwm.start(9)		     
 	        step_4(0)
 	        pas=1
 		if data == 'raise':
@@ -111,6 +110,12 @@ if __name__ == "__main__":
 		if data == 'lower':
 			print 'lowered'
 			steps_4(int(1)*STEPS_PER_SQUARE)	
-		if data == 'open'
+		if data == 'open':
 			print 'opening'
+			pwm.ChangeDutyCycle(9)
+		if data == 'close':
+			print 'closing'
+			pwm.ChangeDutyCycle(8)
+		data = ''
+
 			    
