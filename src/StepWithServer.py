@@ -85,13 +85,18 @@ if __name__ == "__main__":
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.bind((UDP_IP, UDP_PORT))
+	
+	GPIO.setmode(GPIO.BCM)
+	GPIO.setwarnings(False)
+	GPIO.setup(GPIO_CLAW, GPIO.OUT)
+
+	pwm = GPIO.PWM(GPIO_CLAW, 50)
+	pwm.start(9)
 
         while True:
 		print("Waiting for server")
 	        data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
 	     	
-	        GPIO.setmode(GPIO.BCM)
-	        GPIO.setwarnings(False)
 		
 		#setup pi pins as output pins
 	        GPIO.setup(GPIO_INA, GPIO.OUT)
@@ -100,8 +105,8 @@ if __name__ == "__main__":
 	        GPIO.setup(GPIO_IND, GPIO.OUT)
 		GPIO.setup(GPIO_CLAW, GPIO.OUT)
 
-		pwm = GPIO.PWM(GPIO_CLAW, 50)
-		pwm.start(9)		     
+		#pwm = GPIO.PWM(GPIO_CLAW, 50)
+		#pwm.start(9)		     
 	        step_4(0)
 	        pas=1
 		if data == 'raise':
