@@ -1,5 +1,6 @@
 # Import required libraries
 import cv2
+import socket
 import numpy as np
 from matplotlib import pyplot as plt
 
@@ -108,8 +109,27 @@ def compare_histograms(hist1, hist2):
     return index1, index2
 
 
+# Get this machine's ip addr
+def get_ip_address():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    return s.getsockname()[0]
+
 
 # ------ MAIN -------
+
+# Setup networking
+host_ip = get_ip_address()
+host_port = int(sys.argv[1])
+server_address = ('192.168.43.169', 2016)
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock.bind((host_ip, host_port))
+
+# Main loop
+while True:
+    data, addr = sock.recvfrom(1024)
+    if (data == 'calibrate'):
+    elif (data == 'before'):
+    elif (data == 'after'):
 
 # Load image as grayscale
 img = cv2.imread('1.jpg', 0)
