@@ -1,12 +1,12 @@
-#Harshan Anton - Positioning System Stepper Motor
 import socket, sys, time
 import RPi.GPIO as GPIO
 
 #gpio pins for stepper motor is connected to
-GPIO_INA = 5
-GPIO_INB = 6
-GPIO_INC = 12
-GPIO_IND = 13
+GPIO_INA = 17
+GPIO_INB = 22
+GPIO_INC = 23
+GPIO_IND = 24
+GPIO_CLAW = 12
 
 #how many steps equal one square on chess board
 STEPS_PER_SQUARE = 1000
@@ -98,9 +98,19 @@ if __name__ == "__main__":
 	        GPIO.setup(GPIO_INB, GPIO.OUT)
 	        GPIO.setup(GPIO_INC, GPIO.OUT)
 	        GPIO.setup(GPIO_IND, GPIO.OUT)
+		GPIO.setup(GPIO_CLAW, GPIO.OUT)
+
+		pwm = GPIO.PWM(GPIO_CLAW, 50)
+		pwm.start(9)
 		     
 	        step_4(0)
-	        pas=1          
-		steps_4(int(data)*STEPS_PER_SQUARE)
-
-    
+	        pas=1
+		if data == 'raise':
+			print 'raised'          
+			steps_4(int(-1)*STEPS_PER_SQUARE)
+		if data == 'lower':
+			print 'lowered'
+			steps_4(int(1)*STEPS_PER_SQUARE)	
+		if data == 'open'
+			print 'opening'
+			    
