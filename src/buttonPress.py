@@ -3,7 +3,7 @@ import time
 import socket
 
 UDP_IP = "192.168.43.78"
-UDP_PORT = 5005
+UDP_PORT = 2099
 MESSAGE = 'Button pressed on the RPi!'
 print "UDP target IP: ", UDP_IP
 print "UDP target port: ", UDP_PORT
