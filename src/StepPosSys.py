@@ -57,6 +57,7 @@ for pin in bottomStepPins:
     GPIO.setup(pin,GPIO.OUT)
     GPIO.output(pin, False)
  
-# Raise claw
-for x in range(500):
-    step_cycle(-2, bottomStepPins)
+# Move pos sys
+# 200 for lower axis
+for x in range(200):
+    step_cycle(2, topStepPins)
