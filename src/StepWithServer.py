@@ -83,11 +83,19 @@ if __name__ == "__main__":
         UDP_IP = get_ip_address()
         UDP_PORT = port
 
+        server_address = ('192.168.43.169', 2016)
+
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.bind((UDP_IP, UDP_PORT))
 	
 	GPIO.setmode(GPIO.BCM)
 	GPIO.setwarnings(False)
+
+	#setup pi pins as output pins
+	GPIO.setup(GPIO_INA, GPIO.OUT)
+	GPIO.setup(GPIO_INB, GPIO.OUT)
+	GPIO.setup(GPIO_INC, GPIO.OUT)
+	GPIO.setup(GPIO_IND, GPIO.OUT)
 	GPIO.setup(GPIO_CLAW, GPIO.OUT)
 
 	pwm = GPIO.PWM(GPIO_CLAW, 50)
@@ -97,16 +105,7 @@ if __name__ == "__main__":
 		print("Waiting for server")
 	        data, addr = sock.recvfrom(1024) # buffer size is 1024 bytes
 	     	
-		
-		#setup pi pins as output pins
-	        GPIO.setup(GPIO_INA, GPIO.OUT)
-	        GPIO.setup(GPIO_INB, GPIO.OUT)
-	        GPIO.setup(GPIO_INC, GPIO.OUT)
-	        GPIO.setup(GPIO_IND, GPIO.OUT)
-		GPIO.setup(GPIO_CLAW, GPIO.OUT)
-
-		#pwm = GPIO.PWM(GPIO_CLAW, 50)
-		#pwm.start(9)		     
+		     
 	        step_4(0)
 	        pas=1
 		if data == 'raise':
@@ -122,5 +121,7 @@ if __name__ == "__main__":
 			print 'closing'
 			pwm.ChangeDutyCycle(8)
 		data = ''
+		sock.sendto('done'.encode('utf-8'), server_address)
+		
 
 			    
