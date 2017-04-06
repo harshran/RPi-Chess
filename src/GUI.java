@@ -44,6 +44,10 @@ public class GUI implements ActionListener {
         return new ArrayList<Integer>();
     }
 
+    public void update(int oldIndex, int newIndex) {
+        theButtonFrame.movePiece(oldIndex, newIndex);
+    }
+
     public static void main(String[] args) {
       javax.swing.SwingUtilities.invokeLater(new Runnable() {
         @Override public void run() {
