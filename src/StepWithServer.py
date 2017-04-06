@@ -83,7 +83,7 @@ if __name__ == "__main__":
         UDP_IP = get_ip_address()
         UDP_PORT = port
 
-        server_address = ('192.168.43.169', 2016)
+        server_address = ('192.168.43.187', 2071)
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         sock.bind((UDP_IP, UDP_PORT))

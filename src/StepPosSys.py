@@ -116,7 +116,7 @@ for pin in bottomStepPins:
 # Setup networking
 host_ip = get_ip_address()
 host_port = int(sys.argv[1])
-server_address = ('192.168.43.169', 2016)
+server_address = ('192.168.43.187', 2071)
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind((host_ip, host_port))
 

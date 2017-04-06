@@ -3,13 +3,13 @@ import java.util.*;
 public class Brain {
 
     // Static constants
-    public static final String POS_SYS_IP = "1.1.1.1";
-    public static final String CLAW_IP = "1.1.1.1";
-    public static final String LCD_IP = "1.1.1.1";
+    public static final String POS_SYS_IP = "192.168.43.169";
+    public static final String CLAW_IP = "192.168.43.224";
+    public static final String LCD_IP = "192.168.43.112";
     public static final String CAMERA_IP = "1.1.1.1";
-    public static final int POS_SYS_PORT = 3000;
-    public static final int CLAW_PORT = 3000;
-    public static final int LCD_PORT = 3000;
+    public static final int POS_SYS_PORT = 2070;
+    public static final int CLAW_PORT = 2071;
+    public static final int LCD_PORT = 5005;
     public static final int CAMERA_PORT = 3000;
 
     // Instance variables
@@ -26,7 +26,7 @@ public class Brain {
 
     // Game start up procedure
     public void startGame() {
-        moveToIdlePosition(); // Send components to starting position
+        //moveToIdlePosition(); // Send components to starting position
         calibrateCamera(); // Calibrate camera
         playerSetupBoard(); // Tell player to setup pieces on board
         gameLoop(); // Enter main game loop
@@ -38,7 +38,7 @@ public class Brain {
             takeBeforePicture(); // Instruct camera to take before picture
             playerTakesTurn(); // Tell player its their turn
             String playerMove = takeAfterPicture(); // Instruct camera to take after picture
-            verifyLegalMove(playerMove); // Verify move is legal
+            //verifyLegalMove(playerMove); // Verify move is legal
             updateGUI(playerMove); // Update GUI of player's move
             String computerMove = getComputerMove(playerMove); // Get computer's move
             updateGUI(computerMove); // Update gui of computer's move
@@ -64,7 +64,8 @@ public class Brain {
             System.out.println("ERROR in sendPosSysPickup: move is not 4 characters");
         }
         String coord = move.substring(0,2); // Get first coordinate of move
-        server.sendMessage(POS_SYS_IP, POS_SYS_PORT, coord); // Send pickup coord to positioning system
+        String index = Integer.toString(translateIndex(coord));
+        server.sendMessage(POS_SYS_IP, POS_SYS_PORT, index); // Send pickup coord to positioning system
     }
 
     public void sendPosSysDropOff(String move) {
@@ -75,19 +76,24 @@ public class Brain {
             System.out.println("ERROR in sendPosSysDropOff: move is not 4 characters");
         }
         String coord = move.substring(2,4); // Get second coordinate of move
-        server.sendMessage(POS_SYS_IP, POS_SYS_PORT, coord); // Send drop off coord to positioning system
+        String index = Integer.toString(translateIndex(coord));
+        server.sendMessage(POS_SYS_IP, POS_SYS_PORT, index); // Send drop off coord to positioning system
     }
 
     public void clawPickup() {
         // Send 'pickup' message to claw
         // Function blocks until the claw has picked up
-        server.sendMessage(CLAW_IP, CLAW_PORT, "pickup");
+        server.sendMessage(CLAW_IP, CLAW_PORT, "lower");
+        server.sendMessage(CLAW_IP, CLAW_PORT, "close");
+        server.sendMessage(CLAW_IP, CLAW_PORT, "raise");
     }
 
     public void clawDropOff() {
         // Send 'drop' message to claw
         // Function blocks until the claw has dropped of
-        server.sendMessage(CLAW_IP, CLAW_PORT, "drop");
+        server.sendMessage(CLAW_IP, CLAW_PORT, "lower");
+        server.sendMessage(CLAW_IP, CLAW_PORT, "open");
+        server.sendMessage(CLAW_IP, CLAW_PORT, "raise");
     }
 
     public void playerSetupBoard() {
@@ -181,5 +187,8 @@ public class Brain {
     }
 
     public void updateGUI(String move) {
+        String first_coord = move.substring(0,2); // Get first coordinate of move
+        String sec_coord = move.substring(2,4); // Get second coordinate of move
+        gui.update(translateIndex(first_coord), translateIndex(sec_coord));
     }
 }
