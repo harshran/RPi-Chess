@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 from matplotlib import pyplot as plt
 
+
 # Gets pixel location of horizontal and vertial line that make up the chess board
 # For the function to succeed, the board should be empty
 def getChessboardLines(empty_board):
