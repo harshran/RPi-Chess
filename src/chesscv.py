@@ -1,6 +1,10 @@
 # Import required libraries
 import cv2
 import socket
+import struct
+import sys
+import os
+
 import numpy as np
 from matplotlib import pyplot as plt
 
@@ -120,40 +124,81 @@ def get_ip_address():
 # Setup networking
 host_ip = get_ip_address()
 host_port = int(sys.argv[1])
+#camera address
+camera_address = ('22.66.10.194', 2019)
 server_address = ('192.168.43.169', 2016)
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind((host_ip, host_port))
 
+HOST = sys.argv[1]
+PORT = int(sys.argv[2])
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.bind((HOST, PORT))
+s.listen(5)
+
+
+
 # Main loop
+vlines=None
+hlines=None
+harris=None
+blackbg=None
 while True:
     data, addr = sock.recvfrom(1024)
     if (data == 'calibrate'):
+        sock.sendto('take photo'.encode('utf-8'), camera_address)
+        print('SERVER STARTED RUNNING')
+
+        dir = os.getcwd() + '/EmptyBoard.png'
+
+        while True:
+            client, address = s.accept()
+            buf = b''
+            while len(buf) < 4:
+                buf += client.recv(4 - len(buf))
+            size = struct.unpack('!i', buf)[0]
+            with open(dir, 'wb') as f:
+                while size > 0:
+                    data = client.recv(1024)
+                    f.write(data)
+                    size -= len(data)
+            print('Image Saved')
+            client.close()
+
+            img = cv2.imread('EmptyBoard.png', 0)
+            vlines, hlines, harris, blackbg = getChessboardLines(img)
+
+            sock.sendto('done'.encode('utf-8'), server_address)
+
+
+
     elif (data == 'before'):
     elif (data == 'after'):
 
 # Load image as grayscale
-img = cv2.imread('1.jpg', 0)
-img2 = cv2.imread('2.jpg', 0)
-img3 = cv2.imread('3.jpg', 0)
+#img = cv2.imread('1.jpg', 0)
+#img2 = cv2.imread('2.jpg', 0)
+#img3 = cv2.imread('3.jpg', 0)
 
-vlines, hlines, harris, blackbg = getChessboardLines(img)
-print vlines
-print hlines
+#vlines, hlines, harris, blackbg = getChessboardLines(img)
+#print vlines
+#print hlines
 
-old_hist = get_all_histograms(vlines, hlines, img2)
-new_hist = get_all_histograms(vlines, hlines, img3)
-i1, i2 = compare_histograms(old_hist, new_hist)
-print i1
-print i2
+#old_hist = get_all_histograms(vlines, hlines, img2)
+#new_hist = get_all_histograms(vlines, hlines, img3)
+#i1, i2 = compare_histograms(old_hist, new_hist)
+#print i1
+#print i2
 
 
 # Display images
-plt.subplot(1,3,1),plt.imshow(img, 'gray', vmin=0, vmax=255)
-plt.title('Original'), plt.xticks([]), plt.yticks([])
-plt.subplot(1,3,2),plt.imshow(harris, 'gray', vmin=0, vmax=255)
-plt.title('Harris'), plt.xticks([]), plt.yticks([])
-plt.subplot(1,3,3),plt.imshow(blackbg, 'gray', vmin=0, vmax=255)
-plt.title('Blackbg'), plt.xticks([]), plt.yticks([])
+# plt.subplot(1,3,1),plt.imshow(img, 'gray', vmin=0, vmax=255)
+# plt.title('Original'), plt.xticks([]), plt.yticks([])
+# plt.subplot(1,3,2),plt.imshow(harris, 'gray', vmin=0, vmax=255)
+# plt.title('Harris'), plt.xticks([]), plt.yticks([])
+# plt.subplot(1,3,3),plt.imshow(blackbg, 'gray', vmin=0, vmax=255)
+# plt.title('Blackbg'), plt.xticks([]), plt.yticks([])
 # plt.subplot(3,3,4),plt.plot(old_hist[35])
 # plt.title('Old Histogram'), plt.xticks([]), plt.yticks([])
 # plt.subplot(3,3,5),plt.plot(old_hist[i1])
@@ -166,5 +211,4 @@ plt.title('Blackbg'), plt.xticks([]), plt.yticks([])
 # plt.title(''), plt.xticks([]), plt.yticks([])
 # plt.subplot(3,3,9),plt.plot(new_hist[i2])
 # plt.title(''), plt.xticks([]), plt.yticks([])
-plt.show()
-
+# plt.show()
